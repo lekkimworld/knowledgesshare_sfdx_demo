@@ -1,0 +1,16 @@
+<aura:component 
+    implements="flexipage:availableForAllPageTypes,force:hasRecordId"
+    controller="HelloWorldController">
+    
+    <aura:attribute name="headline" type="String" access="private" />
+    <aura:attribute name="user" type="User" access="private" />
+    <aura:handler name="init" value="{!this}" action="{!c.doinit}" />
+
+    <div class="slds-card slds-p-around_small">
+        <div class="slds-text-heading_small">{!v.headline}</div>
+        <aura:if isTrue="{!v.user}">
+            <a href="{!'mailto:' + v.user.Email}">{!v.user.Email}</a>
+        </aura:if>
+    </div>
+
+</aura:component>	
