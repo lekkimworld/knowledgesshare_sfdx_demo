@@ -1,7 +1,7 @@
 <aura:component 
-    implements="flexipage:availableForAllPageTypes,force:hasRecordId"
+    implements="flexipage:availableForAllPageTypes,force:hasRecordId,force:appHostable"
     controller="HelloWorldController">
-    
+
     <aura:attribute name="headline" type="String" access="private" />
     <aura:attribute name="user" type="User" access="private" />
     <aura:handler name="init" value="{!this}" action="{!c.doinit}" />
