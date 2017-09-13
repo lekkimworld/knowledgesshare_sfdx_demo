@@ -1,0 +1,56 @@
+>> WHAT IS SFDX - EXPLORE THE COMMANDS
+sfdx --help
+sfdx force --help
+
+// create project
+sfdx force:project --help
+sfdx force:project:create -n knowledgeshare
+
+// list scratch orgs
+sfdx force:org --help
+sfdx force:org:list
+
+// work with scratch orgs
+sfdx force:org:create -a test1 -s -f config/project-scratch-def.json
+sfdx force:org:open
+sfdx force:org:delete -u test1
+
+>> EXAMPLE STARTING FROM SOURCE
+
+--> start from source (step1)
+sfdx force:org:create -a knowledgeshareTest -s -f config/project-scratch-def.json
+sfdx force:source:push
+sfdx force:org:open 
+
+--> open org and open account - lightning page not activated so do that
+--> add component to account record page
+--> add photo url field to user object
+--> pull source back down
+sfdx force:source:pull
+
+--> delete scratch org
+sfdx force:org:delete -u knowledgeshareTest
+
+>>>> PERMISSION SETS (step2)
+--> create new scratch org
+sfdx force:org:create -a knowledgeshareTest -s -f config/project-scratch-def.json
+sfdx force:source:push
+sfdx force:user:permset:assign -n HelloWorld
+
+
+>>>> automation (password, step 3)
+sfdx force:org:display -u knowledgeshareTest
+sfdx force:org:display -u knowledgeshareTest --json
+sfdx force:org:display -u knowledgeshareTest --json | jq ".result.username" -r
+
+./list_objects.sh
+./list_objects.sh | jq ".sobjects[].label" -r | sort
+./list_objects.sh | jq ".sobjects[].label" -r | wc -l
+
+>>>> SFDX USE DIFFERENT SOURCE FORMAT (step 4)
+sfdx force:mdapi:convert -r ./mdapi
+
+>>>> RUN APEXclear (step 5)
+sfdx force:apex:execute -f anonymous.apex
+
+>>>> RUN TESTS, PACKAGING, LIMITS, CREATE COMPONENTS, LIMITS etc
